@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Vi News App</string>
+    <string name="nodata">No Data | Check internet connection!</string>
+</resources>
