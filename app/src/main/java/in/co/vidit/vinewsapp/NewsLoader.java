@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -54,16 +55,26 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
     // Creates URL object from a URL Search string
     private URL createURL() {
         Log.i("In createURL", " method ;)");
+        /*
         String url = "https://content.guardianapis.com/search?q=politics&show-fields=thumbnail,byline&page-size=50&format=json&api-key=8b062c45-166a-4242-816e-1764c05c1da2";
+
         URL completeURL = null;
         try {
             url = URLEncoder.encode((url).toLowerCase(), "UTF-8");
             completeURL = new URL(url);
         } catch (Exception e) { // UnsupportedEncodingException
             e.printStackTrace();
-        }/* catch (MalformedURLException except) {
+        } catch (MalformedURLException except) {
             return null;
-        }*/
+        }
+        */
+        URL completeURL = null;
+        try {
+            completeURL = new URL("https://content.guardianapis.com/search?q=politics&show-fields=thumbnail,byline&page-size=50&format=json&api-key=8b062c45-166a-4242-816e-1764c05c1da2");
+        } catch (MalformedURLException e) { // UnsupportedEncodingException
+            e.printStackTrace();
+        }
+
         Log.i("VIDIT IS AWESOME!!!", " --------NO------");
         return completeURL;
     }

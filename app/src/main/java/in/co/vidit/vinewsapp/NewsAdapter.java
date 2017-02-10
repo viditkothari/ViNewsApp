@@ -3,6 +3,7 @@ package in.co.vidit.vinewsapp;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         TextView tv_date;
         ImageView imgv_thumbnail;
 
-        ViewHolder(TextView v) {
+        ViewHolder(CardView v) {
             super(v);
             tv_newstitle = (TextView) v.findViewById(R.id.tv_newstitle);
             tv_newssection = (TextView) v.findViewById(R.id.tv_newssection);
@@ -59,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public NewsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // Create a new view and return a ViewHolder object created from it.
-        return (new ViewHolder((TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false)));
+        return (new ViewHolder((CardView)(LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false))));
     }
 
     // Replace the contents of a view (invoked by the layout manager)
