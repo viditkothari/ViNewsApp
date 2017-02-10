@@ -190,16 +190,20 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
                     JSONObject fieldsObject;
                     fieldsObject = newsObject.getJSONObject("fields");
 
+                    // Log.e("$$$ fieldsObject: ", fieldsObject+"");
                     // logic for 'mAuthor'
-                    if (newsObject.has("byline"))
+                    if (fieldsObject.has("byline"))
                         mAuthor = fieldsObject.getString("byline");
 
                     // logic for 'mImgURL'
-                    if (newsObject.has("thumbnail"))
+                    if (fieldsObject.has("thumbnail"))
                         mImgURL = fieldsObject.getString("thumbnail");
 
                     // Add 'New' object to 'News' ArrayList
                     news = new ArrayList<>();
+                    // Log.e("Logging: $$$:  title | ",mTitle + ", author | " + mAuthor + ", image | " + mImgURL + ", date | " + mDate);
+                    // Log.e("Logging: $$$:  url | ",mURL);
+                    // Log.e("Logging: $$$:  title | ",mTitle + " section | " + mSection + " url | " + mURL + " author | " + mAuthor + " " + mImgURL + " " + mDate);
                     news.add(new News(mTitle, mSection, mURL, mAuthor, mImgURL, mDate));
                 }
                 return news;

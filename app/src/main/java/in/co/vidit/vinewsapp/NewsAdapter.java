@@ -27,7 +27,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     private List<News> news;
-    ImageView imgv_thumbnail;
+    Bitmap bitmap_thumbnail;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -72,8 +72,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.tv_author.setText(news.get(position).getmAuthor());
         holder.tv_date.setText(news.get(position).getmDate());
 
-        if (news.get(position).getmImgURL() != null)
+        if (news.get(position).getmImgURL() != null){
             new DownloadImageTask().execute(news.get(position).getmImgURL());
+            holder.imgv_thumbnail.setImageBitmap(bitmap_thumbnail);
+        }
+
+        Log.e("Yo! getmTitle() : ", news.get(position).getmTitle());
+        Log.e("Yo! getmSection() : ", news.get(position).getmSection());
+        Log.e("Yo! getmAuthor() : ", news.get(position).getmAuthor());
+        Log.e("Yo! getmImgURL() : ", news.get(position).getmImgURL());
+        Log.e("Yo! DATE: ", news.get(position).getmDate());
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -89,7 +97,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         }
 
         protected void onPostExecute(Bitmap bmp) {
-            imgv_thumbnail.setImageBitmap(bmp);
+            bitmap_thumbnail = bmp;
         }
 
         private Bitmap readFromStream(InputStream iS) throws IOException {
@@ -110,7 +118,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             try {
                 finalURL = new URL(url);
             } catch (MalformedURLException except) {
-                Log.e("Yo!", "Error with URL creation" + except);
+                Log.e("Yo!", "Error with URL creation:  " + url);
             }
 
             // HttpURLConnection object declaration
@@ -155,6 +163,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     // Return the size of your data-set (invoked by the layout manager)
     @Override
     public int getItemCount() {
+        Log.v("news List Img Count: ",String.valueOf(news.size()));
         return news.size();
     }
 }

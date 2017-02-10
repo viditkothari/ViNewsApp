@@ -1,19 +1,20 @@
 package in.co.vidit.vinewsapp;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 class News {
-    private String mSection;
     private String mTitle;
+    private String mSection;
     private String mURL;
     private String mAuthor;
     private String mImgURL;
     private String mDate;
 
-    News(String mSection, String mTitle, String mURL, String mAuthor, String mImgURL, String mDate) {
+    News(String mTitle, String mSection, String mURL, String mAuthor, String mImgURL, String mDate) {
         this.mSection = mSection;
         this.mTitle = mTitle;
         this.mURL = mURL;
