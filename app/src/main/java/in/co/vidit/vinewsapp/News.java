@@ -1,10 +1,6 @@
 package in.co.vidit.vinewsapp;
 
 import android.text.TextUtils;
-import android.util.Log;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 class News {
     private String mTitle;

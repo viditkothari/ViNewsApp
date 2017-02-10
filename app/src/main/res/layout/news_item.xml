@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="#DDDDDD"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="3dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:orientation="horizontal"
         android:weightSum="5">
 
@@ -38,7 +40,9 @@
                 android:id="@+id/tv_newstitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
                 tools:text="News Title" />
 
             <TextView
@@ -61,6 +65,11 @@
                 android:layout_height="wrap_content"
                 android:text="Date"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/newURL"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:visibility="invisible"/>
 
         </LinearLayout>
 

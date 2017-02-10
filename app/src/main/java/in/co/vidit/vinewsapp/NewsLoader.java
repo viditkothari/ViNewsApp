@@ -14,10 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
@@ -57,7 +55,7 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
         URL completeURL = null;
         try {
             completeURL = new URL("https://content.guardianapis.com/search?q=politics&show-fields=thumbnail,byline&page-size=50&format=json&api-key=8b062c45-166a-4242-816e-1764c05c1da2");
-        } catch (MalformedURLException e) { // UnsupportedEncodingException
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return completeURL;
@@ -109,7 +107,6 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
             if (urlconn.getResponseCode() == 200) {
                 iS = urlconn.getInputStream();
                 jsonResponse = readFromStream(iS);
-                Log.i("makeHttpRequest()", "Response Code 200");
             } else {
                 Log.e("Found Error code: ", urlconn.getResponseCode() + " ! ");
                 return null;
@@ -134,7 +131,7 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
     }
 
     private ArrayList<News> extractDataFromJSON(String JSON_NewsList) {
-        ArrayList<News> news = new ArrayList<>();
+        ArrayList<News> news;
         try {
 
             JSONObject rootJSONObject = (new JSONObject(JSON_NewsList)).getJSONObject("response");
@@ -142,10 +139,11 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
 
             String mTitle = "", mSection = "", mURL = "", mAuthor = "", mImgURL = "", mDate = "";
 
-            // StringBuilder mAuthor = new StringBuilder("");
+            // Add 'New' object to 'News' ArrayList
+            news = new ArrayList<>();
 
-            // If there are results in the newsListArray array
             if (newsListArray.length() > 0) {
+                Log.e("list array Count: ", " at NewsArray: " + String.valueOf(newsListArray.length()));
 
                 JSONObject newsObject;
 
@@ -171,7 +169,6 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
                     JSONObject fieldsObject;
                     fieldsObject = newsObject.getJSONObject("fields");
 
-                    // Log.e("$$$ fieldsObject: ", fieldsObject+"");
                     // logic for 'mAuthor'
                     if (fieldsObject.has("byline"))
                         mAuthor = fieldsObject.getString("byline");
@@ -179,12 +176,6 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
                     // logic for 'mImgURL'
                     if (fieldsObject.has("thumbnail"))
                         mImgURL = fieldsObject.getString("thumbnail");
-
-                    // Add 'New' object to 'News' ArrayList
-                    news = new ArrayList<>();
-                    // Log.e("Logging: $$$:  title | ",mTitle + ", author | " + mAuthor + ", image | " + mImgURL + ", date | " + mDate);
-                    // Log.e("Logging: $$$:  url | ",mURL);
-                    // Log.e("Logging: $$$:  title | ",mTitle + " section | " + mSection + " url | " + mURL + " author | " + mAuthor + " " + mImgURL + " " + mDate);
                     news.add(new News(mTitle, mSection, mURL, mAuthor, mImgURL, mDate));
                 }
                 return news;
