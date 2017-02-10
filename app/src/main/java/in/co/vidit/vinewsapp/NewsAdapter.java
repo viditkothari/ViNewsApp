@@ -1,8 +1,9 @@
 package in.co.vidit.vinewsapp;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+/*import android.graphics.BitmapFactory;
+import android.os.AsyncTask;*/
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,24 +11,22 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/*
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URL;*/
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    public void setNews(ArrayList<News> news) {
-        this.news = news;
-        notifyDataSetChanged();
-    }
-
     private List<News> news;
     Bitmap bitmap_thumbnail;
+    Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -51,8 +50,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NewsAdapter(ArrayList<News> news) {
+    public NewsAdapter(Context context, ArrayList<News> news) {
         this.news = news;
+        this.context=context;
         Log.e("news List Img Count: ",String.valueOf(news.size()));
     }
 
@@ -74,7 +74,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.tv_date.setText(news.get(position).getmDate());
 
         if (news.get(position).hasImg()){
-            new DownloadImageTask().execute(news.get(position).getmImgURL());
+            Picasso.with(context)
+                    .load(news.get(position).getmImgURL())
+                    .into(holder.imgv_thumbnail);
+            // new DownloadImageTask().execute(news.get(position).getmImgURL());
+
             holder.imgv_thumbnail.setImageBitmap(bitmap_thumbnail);
         }
 
@@ -84,7 +88,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         Log.i("Yo! getmImgURL() : ", news.get(position).getmImgURL());
         Log.i("Yo! DATE: ", news.get(position).getmDate());
     }
-
+/*
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         protected Bitmap doInBackground(String... str) {
@@ -131,8 +135,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             try {
                 urlConnForImage = (HttpURLConnection) finalURL.openConnection();
                 urlConnForImage.setRequestMethod("GET");
-                urlConnForImage.setReadTimeout(9000 /* milliseconds */);
-                urlConnForImage.setConnectTimeout(12000 /* milliseconds */);
+                urlConnForImage.setReadTimeout(9000);
+                urlConnForImage.setConnectTimeout(12000);
                 urlConnForImage.connect();
                 if (urlConnForImage.getResponseCode() == 200) {
                     iS = urlConnForImage.getInputStream();
@@ -158,6 +162,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             return bmp;
         }
 
+    }
+
+    */
+
+    public void setNews(ArrayList<News> news) {
+        this.news = news;
+        notifyDataSetChanged();
     }
 
     // Return the size of your data-set (invoked by the layout manager)

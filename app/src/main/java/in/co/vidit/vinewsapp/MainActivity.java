@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new NewsAdapter(new ArrayList<News>());
+        mAdapter = new NewsAdapter(this,new ArrayList<News>());
         mRecyclerView.setAdapter(mAdapter);
 
         getSupportLoaderManager().initLoader(1, null, this).forceLoad();
