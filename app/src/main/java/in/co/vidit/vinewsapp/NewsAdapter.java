@@ -53,6 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     // Provide a suitable constructor (depends on the kind of dataset)
     public NewsAdapter(ArrayList<News> news) {
         this.news = news;
+        Log.e("news List Img Count: ",String.valueOf(news.size()));
     }
 
     // Create new views (invoked by the layout manager)
@@ -72,16 +73,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.tv_author.setText(news.get(position).getmAuthor());
         holder.tv_date.setText(news.get(position).getmDate());
 
-        if (news.get(position).getmImgURL() != null){
+        if (news.get(position).hasImg()){
             new DownloadImageTask().execute(news.get(position).getmImgURL());
             holder.imgv_thumbnail.setImageBitmap(bitmap_thumbnail);
         }
 
-        Log.e("Yo! getmTitle() : ", news.get(position).getmTitle());
-        Log.e("Yo! getmSection() : ", news.get(position).getmSection());
-        Log.e("Yo! getmAuthor() : ", news.get(position).getmAuthor());
-        Log.e("Yo! getmImgURL() : ", news.get(position).getmImgURL());
-        Log.e("Yo! DATE: ", news.get(position).getmDate());
+        Log.i("Yo! getmTitle() : ", news.get(position).getmTitle());
+        Log.i("Yo! getmSection() : ", news.get(position).getmSection());
+        Log.i("Yo! getmAuthor() : ", news.get(position).getmAuthor());
+        Log.i("Yo! getmImgURL() : ", news.get(position).getmImgURL());
+        Log.i("Yo! DATE: ", news.get(position).getmDate());
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -136,7 +137,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 if (urlConnForImage.getResponseCode() == 200) {
                     iS = urlConnForImage.getInputStream();
                     Log.i("URL Connection Done", " Code 200");
-                    Log.i("URL Connection Done", iS.toString());
                     bmp = readFromStream(iS);
                 } else
                     Log.i("Found Error code: ", urlConnForImage.getResponseCode() + " ! ");
@@ -163,7 +163,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     // Return the size of your data-set (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        Log.v("news List Img Count: ",String.valueOf(news.size()));
         return news.size();
     }
 }

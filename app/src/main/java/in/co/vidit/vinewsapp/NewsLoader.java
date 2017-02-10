@@ -54,28 +54,12 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
 
     // Creates URL object from a URL Search string
     private URL createURL() {
-        Log.i("In createURL", " method ;)");
-        /*
-        String url = "https://content.guardianapis.com/search?q=politics&show-fields=thumbnail,byline&page-size=50&format=json&api-key=8b062c45-166a-4242-816e-1764c05c1da2";
-
-        URL completeURL = null;
-        try {
-            url = URLEncoder.encode((url).toLowerCase(), "UTF-8");
-            completeURL = new URL(url);
-        } catch (Exception e) { // UnsupportedEncodingException
-            e.printStackTrace();
-        } catch (MalformedURLException except) {
-            return null;
-        }
-        */
         URL completeURL = null;
         try {
             completeURL = new URL("https://content.guardianapis.com/search?q=politics&show-fields=thumbnail,byline&page-size=50&format=json&api-key=8b062c45-166a-4242-816e-1764c05c1da2");
         } catch (MalformedURLException e) { // UnsupportedEncodingException
             e.printStackTrace();
         }
-
-        Log.i("VIDIT IS AWESOME!!!", " --------NO------");
         return completeURL;
     }
 
@@ -84,7 +68,6 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
      * uses BfrdReader to read data in nice amount of chunks (lines)
      */
     private String readFromStream(InputStream iS) throws IOException {
-        Log.i("In readFromStream", " method ;)");
         StringBuilder outSB = new StringBuilder();
         if (iS != null) {
             InputStreamReader iSReader = new InputStreamReader(iS, "UTF-8");
@@ -108,7 +91,6 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
      * handles IOExceptions while creating HttpURLConnection object or closing the InputStream or checks for errors if "getResponseCode()" is not '200'
      */
     private String makeHttpRequest(URL url) throws IOException {
-        Log.i("In MakeHTTP", " method ;)" + url.toString());
         // String declaration for JSON Response to be fetched from the internet
         String jsonResponse = "";
 
@@ -126,9 +108,8 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
             urlconn.connect();
             if (urlconn.getResponseCode() == 200) {
                 iS = urlconn.getInputStream();
-                Log.i("makeHttpRequest()", "Response Code 200");
-                Log.i("makeHttpRequest()", "InputStream: " + iS.toString());
                 jsonResponse = readFromStream(iS);
+                Log.i("makeHttpRequest()", "Response Code 200");
             } else {
                 Log.e("Found Error code: ", urlconn.getResponseCode() + " ! ");
                 return null;
