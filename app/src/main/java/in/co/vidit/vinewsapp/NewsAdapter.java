@@ -17,7 +17,7 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> news;
-    private Bitmap bitmap_thumbnail;
+    // private Bitmap bitmap_thumbnail;
     private Context context;
 
     // Provide a reference to the views for each data item
@@ -74,7 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     .load(news.get(position).getmImgURL())
                     .into(holder.imgv_thumbnail);
 
-            holder.imgv_thumbnail.setImageBitmap(bitmap_thumbnail);
+            // holder.imgv_thumbnail.setImageBitmap(bitmap_thumbnail);
         }
 
     }
